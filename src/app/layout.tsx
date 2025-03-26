@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// import "../../styles/globals.css";
-import "@/styles/globals.css";
+import "@/src/styles/globals.css";
+import { ThemeProvider } from "@/src/components/theme-provider";
+import { Footer } from "@/src/components/base/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chat",
-  description: "Chat next app",
+  title: "APP",
+  description: "Next app",
 };
 
 export default function RootLayout({
@@ -24,11 +25,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main className="flex-1">{children}</main>
+
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

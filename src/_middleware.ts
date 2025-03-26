@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { auth } from "@/src/auth";
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get("jwt");
+const protectedRoutes = ["/dashboard"];
 
-  // Define public routes to exclude from middleware checks
-  const publicPaths = ["/login", "/signup", "/about"];
+export default async function middleware(request: NextRequest) {
+  const session = await auth();
 
-  // Exclude public routes from middleware checks
-  if (publicPaths.includes(request.nextUrl.pathname)) {
-    return NextResponse.next();
-  }
+  const { pathname } = request.nextUrl;
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  const isProtected = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  if (isProtected && !session) {
+    return NextResponse.redirect(new URL("/api/auth/signin", request.url));
   }
 
   return NextResponse.next();
