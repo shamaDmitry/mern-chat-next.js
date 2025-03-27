@@ -29,7 +29,7 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="start">
         {THEMES.map((item) => {
           return (
             <DropdownMenuItem

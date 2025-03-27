@@ -16,7 +16,6 @@ import { Input } from "@/src/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
-import { loginCredentials } from "@/src/lib/actions/auth";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -39,7 +38,7 @@ export const LoginForm: FC<LoginFormProps> = ({ className }) => {
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    loginCredentials(data);
+    console.log(data);
   };
 
   return (

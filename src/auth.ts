@@ -55,9 +55,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const userData = {
           id: user._id,
-          fullName: user.fullName,
+          name: user.fullName,
           email: user.email,
-          profilePic: user.profilePic,
+          image: user.profilePic,
         };
 
         return userData;
@@ -72,25 +72,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    session: ({ session, token }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: token.id,
-        fullName: token.fullName,
-        profilePic: token.profilePic,
-      },
-    }),
-    jwt: ({ token, user }) => {
-      if (user) {
-        return {
-          ...token,
-          id: user.id,
-          fullName: user.fullName,
-          profilePic: user.profilePic,
-        };
-      }
-      return token;
-    },
+    // authorized: async ({ auth }) => {
+    //   // Logged in users are authenticated, otherwise redirect to login page
+    //   return !!auth;
+    // },
+    // session: ({ session, token }) => ({
+    //   ...session,
+    //   user: {
+    //     ...session.user,
+    //     id: token.id,
+    //     fullName: token.fullName,
+    //     profilePic: token.profilePic,
+    //   },
+    // }),
+    // jwt: ({ token, user }) => {
+    //   if (user) {
+    //     return {
+    //       ...token,
+    //       id: user.id,
+    //       fullName: user.fullName,
+    //       profilePic: user.profilePic,
+    //     };
+    //   }
+    //   return token;
+    // },
   },
 });
