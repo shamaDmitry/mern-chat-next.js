@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeToggle } from "@/src/components/theme-toggle";
+import { ThemeToggle } from "../theme-toggle";
 
 export const Footer = () => {
   return (
