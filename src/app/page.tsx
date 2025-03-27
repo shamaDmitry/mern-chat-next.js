@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SignInButton } from "@/src/components/sign-in-button";
+import { SignInButtons } from "@/src/components/sign-in-button";
 import { auth } from "@/src/auth";
 import { SignOutButton } from "@/src/components/sign-out-button";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
@@ -9,13 +9,13 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto py-5">
-      <div className="flex gap-2 flex-wrap justify-between">
+      <div className="flex gap-2 flex-wrap justify-between items-start">
         <Link href="/" className="border py-2 px-4 capitalize">
           logo
         </Link>
 
         <div className="flex gap-2">
-          {!session?.user && <SignInButton />}
+          {!session?.user && <SignInButtons />}
 
           {session?.user && (
             <div className="flex gap-5 items-center">
