@@ -15,7 +15,11 @@ import { cn } from "@/src/lib/utils";
 
 const THEMES = ["light", "dark", "system"];
 
-export function ThemeToggle() {
+interface ThemeToggleProps {
+  align?: "start" | "center" | "end";
+}
+
+export function ThemeToggle({ align = "end" }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme();
 
   return (
@@ -29,7 +33,7 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent align={align}>
         {THEMES.map((item) => {
           return (
             <DropdownMenuItem

@@ -11,11 +11,47 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
+} from "@/src/components/ui/tooltip";
+
+import { v4 as uuid } from "uuid";
+
+const menuItems = [
+  {
+    id: uuid(),
+    title: "Features",
+    href: "#features",
+    isProtected: false,
+  },
+  {
+    id: uuid(),
+    title: "Testimonials",
+    href: "#testimonials",
+    isProtected: false,
+  },
+  {
+    id: uuid(),
+    title: "Pricing",
+    href: "#pricing",
+    isProtected: false,
+  },
+  {
+    id: uuid(),
+    title: "Faq",
+    href: "#faq",
+    isProtected: false,
+  },
+  {
+    id: uuid(),
+    title: "dashboard",
+    href: "dashboard",
+    isProtected: true,
+  },
+];
 
 export const Header = async () => {
   const session = await auth();
   const image = session?.user?.image;
+
   console.log("session", session);
 
   return (
@@ -24,30 +60,21 @@ export const Header = async () => {
         <Logo />
 
         <nav className="hidden md:flex gap-6">
-          <Link
-            href="#features"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            Features
-          </Link>
-          <Link
-            href="#testimonials"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            Testimonials
-          </Link>
-          <Link
-            href="#pricing"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            Pricing
-          </Link>
-          <Link
-            href="#faq"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            FAQ
-          </Link>
+          {menuItems.map((item) => {
+            if (item.isProtected && !session?.user) {
+              return null;
+            }
+
+            return (
+              <Link
+                key={item.id}
+                href={item.href}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary capitalize"
+              >
+                {item.title}
+              </Link>
+            );
+          })}
         </nav>
 
         {session?.user && (
