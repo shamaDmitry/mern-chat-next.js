@@ -15,7 +15,7 @@ import { userActivityData } from "@/src/components/dashboard/dummyData";
 
 export const UserActivityChart = () => {
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={350}>
       <BarChart
         data={userActivityData}
         margin={{
@@ -30,6 +30,7 @@ export const UserActivityChart = () => {
         <YAxis />
         <Tooltip />
         <Legend />
+
         <Bar dataKey="active" fill="#82ca9d" />
       </BarChart>
     </ResponsiveContainer>

@@ -1,4 +1,5 @@
 "use client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,43 +11,69 @@ import {
 import { Button } from "@/src/components/ui/button";
 
 import { v4 as uuid } from "uuid";
-import { SyntheticEvent } from "react";
 import { logout } from "@/src/lib/actions/auth";
+import { Session } from "next-auth";
+import { Avatar, AvatarFallback } from "@/src/components/ui/avatar";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const menu = [
   {
     id: uuid(),
     title: "Profile",
-    action: (event: SyntheticEvent) => {
-      console.log("event", event);
+    action: (router: AppRouterInstance) => {
+      router.push("/profile");
     },
   },
   {
     id: uuid(),
     title: "Settings",
-    action: (event: SyntheticEvent) => {
-      console.log("event", event);
+    action: (router: AppRouterInstance) => {
+      router.push("/settings");
     },
   },
 ];
 
-export const UserMenu = () => {
+interface UserMenuProps {
+  session: Session;
+}
+
+export const UserMenu = ({ session }: UserMenuProps) => {
+  const router = useRouter(); // Initialize the router
+
+  const { user } = session;
+  const image = user?.image;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full ">
-          <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            JD
-          </div>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="size-[36px] border">
+            {image ? (
+              <Image
+                className="size-full"
+                width={100}
+                height={100}
+                src={image as string}
+                alt={session.user.name as string}
+              />
+            ) : (
+              <AvatarFallback className="capitalize font-medium">
+                {session.user.name?.charAt(0) || ""}
+              </AvatarFallback>
+            )}
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">John Doe</p>
+            <p className="text-sm font-medium leading-none">{user?.name}</p>
+
             <p className="text-xs leading-none text-muted-foreground">
-              john@example.com
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -57,7 +84,7 @@ export const UserMenu = () => {
           return (
             <DropdownMenuItem
               key={item.id}
-              onClick={item?.action}
+              onClick={() => item?.action(router)}
               className="cursor-pointer"
             >
               {item.title}

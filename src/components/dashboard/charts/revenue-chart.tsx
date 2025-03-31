@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Area,
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
@@ -28,7 +29,7 @@ export const RevenueChart = () => {
         <YAxis />
         <Tooltip />
 
-        <AreaChart
+        <Area
           type="monotone"
           dataKey="revenue"
           stroke="#8884d8"

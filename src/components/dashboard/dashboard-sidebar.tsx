@@ -1,14 +1,13 @@
-import Link from "next/link";
 import {
   Calendar,
   CreditCard,
   Home,
   LineChart,
+  LucideIcon,
   PieChart,
   Settings,
   Users,
 } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -18,65 +17,100 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/src/components/ui/sidebar";
-import { Logo } from "../base/logo";
+import Link from "next/link";
+import { Logo } from "@/src/components/base/logo";
+
+import { v4 as uuid } from "uuid";
+import { cn } from "@/src/lib/utils";
+
+interface SidebarMenuItem {
+  id: string;
+  title: string;
+  href: string;
+  icon: LucideIcon;
+  isVisible: boolean;
+}
+
+const sidebarMenuItems: SidebarMenuItem[] = [
+  {
+    id: uuid(),
+    title: "dashboard",
+    href: "/dashboard",
+    icon: Home,
+    isVisible: true,
+  },
+  {
+    id: uuid(),
+    title: "Users",
+    href: "/users",
+    icon: Users,
+    isVisible: false,
+  },
+  {
+    id: uuid(),
+    title: "Analytics",
+    href: "/analytics",
+    icon: LineChart,
+    isVisible: false,
+  },
+  {
+    id: uuid(),
+    title: "Reports",
+    href: "/reports",
+    icon: PieChart,
+    isVisible: false,
+  },
+  {
+    id: uuid(),
+    title: "Calendar",
+    href: "/calendar",
+    icon: Calendar,
+    isVisible: false,
+  },
+  {
+    id: uuid(),
+    title: "Billing",
+    href: "/Billing",
+    icon: CreditCard,
+    isVisible: false,
+  },
+];
 
 export const DashboardSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader>
-        <Logo />
+        <Logo href="/dashboard" />
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/dashboard" className="flex items-center">
-                <Home className="mr-2 h-4 w-4" />
-                <span>Dashboard</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/dashboard/users" className="flex items-center">
-                <Users className="mr-2 h-4 w-4" />
-                <span>Users</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/dashboard/analytics" className="flex items-center">
-                <LineChart className="mr-2 h-4 w-4" />
-                <span>Analytics</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/dashboard/reports" className="flex items-center">
-                <PieChart className="mr-2 h-4 w-4" />
-                <span>Reports</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/dashboard/calendar" className="flex items-center">
-                <Calendar className="mr-2 h-4 w-4" />
-                <span>Calendar</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/dashboard/billing" className="flex items-center">
-                <CreditCard className="mr-2 h-4 w-4" />
-                <span>Billing</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          {sidebarMenuItems
+            // .filter((item) => item.isVisible)
+            .map((item) => {
+              return (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton asChild>
+                    <Link
+                      href={item.href}
+                      className={cn("flex items-center", {
+                        "opacity-30 pointer-events-none": !item.isVisible,
+                      })}
+                    >
+                      <item.icon className="mr-2 h-4 w-4" />
+
+                      <span className="capitalize">{item.title}</span>
+
+                      {item.isVisible ? null : (
+                        <span className="ml-auto text-xs text-muted-foreground">
+                          Coming soon
+                        </span>
+                      )}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
         </SidebarMenu>
       </SidebarContent>
 
@@ -84,7 +118,7 @@ export const DashboardSidebar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href="/dashboard/settings" className="flex items-center">
+              <Link href="/settings" className="flex items-center">
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </Link>

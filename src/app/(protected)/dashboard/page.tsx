@@ -1,3 +1,4 @@
+import { DevicesChart } from "@/src/components/dashboard/charts/devices-chart";
 import { RevenueChart } from "@/src/components/dashboard/charts/revenue-chart";
 import { UserActivityChart } from "@/src/components/dashboard/charts/user-activity-chart";
 import { Headline } from "@/src/components/typo/Headline";
@@ -11,7 +12,14 @@ import {
 
 import { CreditCard, LineChart, Users } from "lucide-react";
 
-export default function DashboardPage() {
+import { headers } from "next/headers";
+
+export default async function DashboardPage() {
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent");
+
+  console.log("userAgent", userAgent);
+
   return (
     <div>
       <Headline className="mb-5">DashboardPage</Headline>
@@ -77,8 +85,8 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4">
+        <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-3">
+          <Card className="">
             <CardHeader>
               <CardTitle>Revenue Overview</CardTitle>
             </CardHeader>
@@ -88,7 +96,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="col-span-3">
+          <Card className="">
             <CardHeader>
               <CardTitle>User Activity</CardTitle>
 
@@ -99,6 +107,18 @@ export default function DashboardPage() {
 
             <CardContent>
               <UserActivityChart />
+            </CardContent>
+          </Card>
+
+          <Card className="">
+            <CardHeader>
+              <CardTitle>Device Distribution</CardTitle>
+
+              <CardDescription>User device breakdown</CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <DevicesChart />
             </CardContent>
           </Card>
         </div>
