@@ -11,14 +11,14 @@ import {
 } from "@/src/components/ui/card";
 
 import { CreditCard, LineChart, Users } from "lucide-react";
-
-import { headers } from "next/headers";
+// import { UAParser } from "ua-parser-js";
+// import { headers } from "next/headers";
 
 export default async function DashboardPage() {
-  const headersList = await headers();
-  const userAgent = headersList.get("user-agent");
+  // const headersList = await headers();
+  // const userAgent = headersList.get("user-agent") || "";
 
-  console.log("userAgent", userAgent);
+  // const { browser, cpu, device } = UAParser(userAgent);
 
   return (
     <div>

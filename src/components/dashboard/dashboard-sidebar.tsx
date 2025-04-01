@@ -44,7 +44,7 @@ const sidebarMenuItems: SidebarMenuItem[] = [
     title: "Users",
     href: "/users",
     icon: Users,
-    isVisible: false,
+    isVisible: true,
   },
   {
     id: uuid(),
