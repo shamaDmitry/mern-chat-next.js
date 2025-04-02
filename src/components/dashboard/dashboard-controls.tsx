@@ -1,3 +1,5 @@
+"use client";
+
 import { SearchInput } from "@/src/components/dashboard/search-input";
 import { Button } from "@/src/components/ui/button";
 import { Bell } from "lucide-react";
@@ -12,7 +14,7 @@ interface DashboardControlsProps {
 export const DashboardControls = ({ session }: DashboardControlsProps) => {
   return (
     <>
-      <SearchInput />
+      <SearchInput value="" onChange={() => {}} />
 
       <Button variant="ghost" size="icon">
         <Bell className="h-5 w-5" />

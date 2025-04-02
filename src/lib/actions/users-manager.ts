@@ -10,24 +10,24 @@ import {
   updateDoc,
   deleteDoc,
   getDoc,
-  query,
-  where,
+  // query,
+  // where,
 } from "firebase/firestore";
 
 export async function getUsers() {
   try {
     const querySnapshot = await getDocs(collection(db, "users"));
 
-    const users: User[] = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      first_name: doc.data().first_name,
-      last_name: doc.data().last_name,
-      email: doc.data().email,
-      gender: doc.data().gender,
-      role: doc.data().role,
-      status: doc.data().status,
-      ...doc.data(),
-    }));
+    const users: User[] = querySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        name: doc.data().name,
+        email: doc.data().email,
+        gender: doc.data().gender,
+        role: doc.data().role,
+        status: doc.data().status,
+      };
+    });
 
     return users;
   } catch (error) {
@@ -54,8 +54,7 @@ export async function getUserById(userId: string) {
 
 export async function createUser(userData: {
   id: string;
-  first_name: string;
-  last_name: string;
+  name: string;
   email: string;
   role: string;
   status: string;
@@ -66,6 +65,7 @@ export async function createUser(userData: {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });
+
     return docRef.id;
   } catch (error) {
     console.log("error", error);
@@ -73,22 +73,15 @@ export async function createUser(userData: {
   }
 }
 
-export async function updateUser(
-  userId: string,
-  userData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    role: string;
-    status: string;
-  }>
-) {
+export async function updateUser(userId: string, userData: Partial<User>) {
   try {
     const userRef = doc(db, "users", userId);
+
     await updateDoc(userRef, {
       ...userData,
       updatedAt: new Date().toISOString(),
     });
+
     return true;
   } catch (error) {
     console.log("error", error);
@@ -98,7 +91,10 @@ export async function updateUser(
 
 export async function deleteUser(userId: string) {
   try {
-    await deleteDoc(doc(db, "users", userId));
+    const userRef = doc(db, "users", userId);
+
+    await deleteDoc(userRef);
+
     return true;
   } catch (error) {
     console.log("error", error);
@@ -108,18 +104,29 @@ export async function deleteUser(userId: string) {
 
 export async function searchUsers(searchTerm: string) {
   try {
-    const q = query(
-      collection(db, "users"),
-      where("name", ">=", searchTerm),
-      where("name", "<=", searchTerm + "\uf8ff")
-    );
+    const usersRef = collection(db, "users");
+    const querySnapshot = await getDocs(usersRef);
 
-    const querySnapshot = await getDocs(q);
+    const users: User[] = querySnapshot.docs
+      .map((doc) => ({
+        id: doc.id,
+        name: doc.data().name,
+        email: doc.data().email,
+        gender: doc.data().gender,
+        role: doc.data().role,
+        status: doc.data().status,
+        ...doc.data(),
+      }))
+      .filter((user) => {
+        const searchTermLower = searchTerm.toLowerCase();
 
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+        return (
+          user.name.toLowerCase().includes(searchTermLower) ||
+          user.email.toLowerCase().includes(searchTermLower)
+        );
+      });
+
+    return users;
   } catch (error) {
     console.log("error", error);
     throw new Error("Failed to search users");
