@@ -2,40 +2,48 @@ import mongoose from "mongoose";
 
 const userStatsSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     userAgent: {
       type: String,
       required: true,
     },
-
-    // email: {
-    //   type: String,
-    //   required: true,
-    //   unique: true,
-    //   trim: true,
-    //   lowercase: true,
-    // },
-    // fullName: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    // },
-    // password: {
-    //   type: String,
-    //   required: true,
-    //   minlength: 6,
-    // },
-    // profilePic: {
-    //   type: String,
-    //   default: "",
-    // },
-    // authProvider: {
-    //   type: String,
-    // },
+    browser: {
+      name: {
+        type: String,
+        default: "",
+      },
+      version: {
+        type: String,
+        default: "",
+      },
+      major: {
+        type: String,
+        default: "",
+      },
+    },
+    os: {
+      name: {
+        type: String,
+        default: "",
+      },
+      version: {
+        type: String,
+        default: "",
+      },
+    },
+    device: {
+      deviceType: {
+        type: String,
+        default: "",
+      },
+      model: {
+        type: String,
+        default: "",
+      },
+      vendor: {
+        type: String,
+        default: "",
+      },
+    },
   },
   {
     timestamps: true,

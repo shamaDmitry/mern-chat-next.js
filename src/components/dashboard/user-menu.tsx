@@ -94,7 +94,9 @@ export const UserMenu = ({ session }: UserMenuProps) => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={() => logout()}>Log out</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer" onClick={() => logout()}>
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

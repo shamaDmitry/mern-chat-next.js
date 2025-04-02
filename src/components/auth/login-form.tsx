@@ -3,7 +3,7 @@ import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 import { loginCredentials } from "@/src/lib/actions/auth";
-import { SignInButtons } from "../sign-in-button";
+import { SignInButtons } from "@/src/components/sign-in-button";
 
 interface LoginFormProps {
   className?: string;

@@ -29,7 +29,7 @@ export const loginCredentials = async (formData: FormData) => {
     return someError.cause;
   }
 
-  redirect("/");
+  redirect("/dashboard");
 };
 
 export const logout = async () => {

@@ -10,7 +10,6 @@ export default function LoginPage() {
         <div className="w-full max-w-md space-y-8">
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              {/* <Logo /> */}
               <Headline className="mt-2">Welcome Back</Headline>
 
               <p className="text-base-content/60">Sign in to your account</p>
