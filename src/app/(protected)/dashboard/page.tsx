@@ -112,9 +112,9 @@ export default async function DashboardPage() {
 
           <Card className="">
             <CardHeader>
-              <CardTitle>Device Distribution</CardTitle>
+              <CardTitle>OS Distribution</CardTitle>
 
-              <CardDescription>User device breakdown</CardDescription>
+              <CardDescription>User OS breakdown</CardDescription>
             </CardHeader>
 
             <CardContent>

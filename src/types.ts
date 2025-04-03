@@ -13,3 +13,13 @@ export type User = {
   role: string;
   status: string;
 };
+
+export type OsChartData = {
+  name: string;
+  count: number;
+  devices: {
+    model: string;
+    vendor: string;
+    osVersion: string;
+  }[];
+};

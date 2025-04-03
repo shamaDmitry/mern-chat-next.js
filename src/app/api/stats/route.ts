@@ -27,7 +27,7 @@ export async function GET() {
         $project: {
           _id: 0,
           deviceType: "$_id.deviceType",
-          osName: "$_id.osName",
+          name: "$_id.osName",
           count: 1,
           devices: 1,
         },

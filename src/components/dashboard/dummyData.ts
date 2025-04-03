@@ -30,3 +30,32 @@ export const deviceData = [
 ];
 
 export const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+
+export const generateColors = (count: number) => {
+  const baseColors = [
+    "#0088FE",
+    "#00C49F",
+    "#FFBB28",
+    "#FF8042",
+    "#8884D8",
+    "#82CA9D",
+    "#F06292",
+    "#4CAF50",
+    "#9C27B0",
+    "#FF5722",
+  ];
+
+  if (count <= baseColors.length) {
+    return baseColors.slice(0, count);
+  }
+
+  const colors = [...baseColors];
+
+  for (let i = baseColors.length; i < count; i++) {
+    const hue = (i * 137.508) % 360; // Golden angle approximation
+
+    colors.push(`hsl(${hue}, 70%, 50%)`);
+  }
+
+  return colors;
+};
