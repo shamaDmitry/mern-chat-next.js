@@ -23,12 +23,6 @@ export const userActivityData = [
   { name: "Sun", active: 300 },
 ];
 
-export const deviceData = [
-  { name: "Desktop", value: 60 },
-  { name: "Mobile", value: 30 },
-  { name: "Tablet", value: 10 },
-];
-
 export const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
 export const generateColors = (count: number) => {

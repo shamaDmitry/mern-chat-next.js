@@ -31,7 +31,7 @@ interface SidebarMenuItem {
   isVisible: boolean;
 }
 
-const sidebarMenuItems: SidebarMenuItem[] = [
+export const sidebarMenuItems: SidebarMenuItem[] = [
   {
     id: uuid(),
     title: "dashboard",

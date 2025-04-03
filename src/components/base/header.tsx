@@ -14,6 +14,13 @@ import {
 } from "@/src/components/ui/tooltip";
 
 import { v4 as uuid } from "uuid";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/src/components/ui/dropdown-menu";
+import { MenuIcon } from "lucide-react";
 
 const menuItems = [
   {
@@ -75,6 +82,62 @@ export const Header = async () => {
           })}
         </nav>
 
+        <div className="ml-auto md:hidden mr-5">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className="flex ">
+                <MenuIcon className="h-[1.2rem] w-[1.2rem] transition-all" />
+
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align={"end"}>
+              {menuItems.map((item) => {
+                if (item.isProtected && !session?.user) {
+                  return null;
+                }
+
+                return (
+                  <DropdownMenuItem asChild key={item.id}>
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary capitalize cursor-pointer"
+                    >
+                      {item.title}
+                    </Link>
+                  </DropdownMenuItem>
+                );
+              })}
+
+              {!session?.user && (
+                <>
+                  <DropdownMenuItem>
+                    <Button asChild variant={"outline"} className="w-full">
+                      <Link href="/login">Login</Link>
+                    </Button>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem>
+                    <Button asChild variant={"default"}>
+                      <Link href="/signup">Get Started</Link>
+                    </Button>
+                  </DropdownMenuItem>
+                </>
+              )}
+
+              {session?.user && (
+                <>
+                  <DropdownMenuItem asChild>
+                    <SignOutButton className="w-full mt-4" size="sm" />
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
         {session?.user && (
           <div className="flex gap-5 items-center">
             <TooltipProvider>
@@ -101,18 +164,19 @@ export const Header = async () => {
               </Tooltip>
             </TooltipProvider>
 
-            <SignOutButton />
+            <SignOutButton className="hidden md:flex" />
           </div>
         )}
 
         {!session?.user && (
-          <div className="flex items-center gap-4">
+          <div className="items-center gap-4 hidden md:flex">
             <Link
               href="/login"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               Log in
             </Link>
+
             <Button asChild>
               <Link href="/signup">Get Started</Link>
             </Button>

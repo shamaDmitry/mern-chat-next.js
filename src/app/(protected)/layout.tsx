@@ -15,7 +15,7 @@ export default async function DashboardLayout({ children }: LayoutProps) {
   const headersList = await headers();
   const userAgent = headersList.get("user-agent") || "";
 
-  await saveUserStats(userAgent);
+  // await saveUserStats(userAgent);
 
   return (
     <SidebarProvider>
