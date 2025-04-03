@@ -18,6 +18,10 @@ export async function middleware(request: NextRequest) {
     sidebarMenuItems.filter((item) => item.href === request.nextUrl.pathname)
       .length > 0;
 
+  console.log("currentUser", currentUser);
+  console.log("isAuthPage", isAuthPage);
+  console.log("isProtectedPage", isProtectedPage);
+
   if (isAuthPage && isAuthenticated) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
