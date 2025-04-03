@@ -1,23 +1,28 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { auth } from "@/src/auth";
 import { sidebarMenuItems } from "./components/dashboard/dashboard-sidebar";
+import { getToken } from "next-auth/jwt";
 
 const authPages = ["/login", "/signup"];
 
 export async function middleware(request: NextRequest) {
-  const session = await auth();
+  const currentUser = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET,
+  });
+
+  const isAuthenticated = !!currentUser;
 
   const isAuthPage = authPages.includes(request.nextUrl.pathname);
   const isProtectedPage =
     sidebarMenuItems.filter((item) => item.href === request.nextUrl.pathname)
       .length > 0;
 
-  if (isAuthPage && session) {
+  if (isAuthPage && isAuthenticated) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  if (isProtectedPage && !session) {
+  if (isProtectedPage && !isAuthenticated) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
