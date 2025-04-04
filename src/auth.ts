@@ -9,6 +9,8 @@ import { DefaultSession } from "next-auth";
 import { saveUserStats } from "./lib/actions/user-stats";
 import { headers } from "next/headers";
 
+// const PUBLIC_PAGES = ["/", "/login", "/signup"];
+
 declare module "next-auth" {
   interface Session {
     user: {
@@ -73,6 +75,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
   },
   callbacks: {
+    authorized: async ({ auth, request }) => {
+      const PUBLIC_PAGES = ["/", "/login", "/signup"];
+      const isPublicPage = PUBLIC_PAGES.includes(request.nextUrl.pathname);
+
+      const isAuthPage = ["/login", "/signup"].includes(
+        request.nextUrl.pathname
+      );
+
+      if (auth && isAuthPage) {
+        return Response.redirect(new URL("/", request.nextUrl));
+      }
+
+      if (isPublicPage) {
+        return true; // Allow access to public pages
+      }
+
+      return !!auth; // Require authentication for all other routes
+    },
+
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
