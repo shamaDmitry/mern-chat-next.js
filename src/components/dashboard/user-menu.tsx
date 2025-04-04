@@ -40,7 +40,11 @@ interface UserMenuProps {
 }
 
 export const UserMenu = ({ session }: UserMenuProps) => {
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
+
+  if (!session) {
+    return null;
+  }
 
   const { user } = session;
   const image = user?.image;

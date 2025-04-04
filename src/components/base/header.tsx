@@ -170,12 +170,14 @@ export const Header = async () => {
 
         {!session?.user && (
           <div className="items-center gap-4 hidden md:flex">
-            <Link
-              href="/login"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              Log in
-            </Link>
+            <Button asChild variant={"outline"}>
+              <Link
+                href="/login"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              >
+                Log in
+              </Link>
+            </Button>
 
             <Button asChild>
               <Link href="/signup">Get Started</Link>
