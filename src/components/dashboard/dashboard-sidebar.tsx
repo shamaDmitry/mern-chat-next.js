@@ -70,7 +70,7 @@ export const sidebarMenuItems: SidebarMenuItem[] = [
   {
     id: uuid(),
     title: "Billing",
-    href: "/Billing",
+    href: "/billing",
     icon: CreditCard,
     isVisible: false,
   },
