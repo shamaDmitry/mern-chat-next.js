@@ -12,7 +12,7 @@ import { generateColors } from "@/src/components/dashboard/dummyData";
 import { useEffect, useState } from "react";
 import { OsChartData } from "@/src/types";
 
-export const DevicesChart = () => {
+export default function DevicesChart() {
   const [colors, setColors] = useState<string[]>([]);
 
   const [chartData, setChartData] = useState<OsChartData[]>([]);
@@ -68,4 +68,4 @@ export const DevicesChart = () => {
       </PieChart>
     </ResponsiveContainer>
   );
-};
+}

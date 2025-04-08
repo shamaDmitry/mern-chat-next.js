@@ -5,21 +5,19 @@ import Credentials from "next-auth/providers/credentials";
 import { connectDB } from "./lib/db";
 import User from "./models/user.model";
 import { compare } from "bcryptjs";
-import { DefaultSession } from "next-auth";
+// import { DefaultSession } from "next-auth";
 import { saveUserStats } from "./lib/actions/user-stats";
 import { headers } from "next/headers";
 
-// const PUBLIC_PAGES = ["/", "/login", "/signup"];
-
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      fullName: string;
-      profilePic: string;
-    } & DefaultSession["user"];
-  }
-}
+// declare module "next-auth" {
+//   interface Session {
+//     user: {
+//       id: string;
+//       fullName: string;
+//       profilePic: string;
+//     } & DefaultSession["user"];
+//   }
+// }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
@@ -84,7 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       );
 
       if (auth && isAuthPage) {
-        return Response.redirect(new URL("/", request.nextUrl));
+        return Response.redirect(new URL("/dashboard", request.nextUrl));
       }
 
       if (isPublicPage) {

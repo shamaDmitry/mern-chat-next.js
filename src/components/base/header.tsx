@@ -150,10 +150,12 @@ export const Header = async () => {
                         width={100}
                         height={100}
                         src={image as string}
-                        alt={session.user.name as string}
+                        alt={(session?.user?.name as string) || ""}
                       />
                     ) : (
-                      <AvatarFallback>{session.user.name}</AvatarFallback>
+                      <AvatarFallback>
+                        {session?.user?.name || ""}
+                      </AvatarFallback>
                     )}
                   </Avatar>
                 </TooltipTrigger>

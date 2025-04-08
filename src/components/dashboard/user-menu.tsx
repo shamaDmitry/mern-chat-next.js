@@ -60,11 +60,11 @@ export const UserMenu = ({ session }: UserMenuProps) => {
                 width={100}
                 height={100}
                 src={image as string}
-                alt={session.user.name as string}
+                alt={(session?.user?.name as string) || ""}
               />
             ) : (
               <AvatarFallback className="capitalize font-medium">
-                {session.user.name?.charAt(0) || ""}
+                {session?.user?.name?.charAt(0) || ""}
               </AvatarFallback>
             )}
           </Avatar>

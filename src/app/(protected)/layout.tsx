@@ -3,18 +3,18 @@ import { Toaster } from "react-hot-toast";
 import { DashboardSidebar } from "@/src/components/dashboard/dashboard-sidebar";
 import { DashboardControls } from "@/src/components/dashboard/dashboard-controls";
 import { auth } from "@/src/auth";
-// import { headers } from "next/headers";
-// import { saveUserStats } from "@/src/lib/actions/user-stats";
+import { headers } from "next/headers";
+import { saveUserStats } from "@/src/lib/actions/user-stats";
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export default async function DashboardLayout({ children }: LayoutProps) {
   const session = await auth();
-  // const headersList = await headers();
-  // const userAgent = headersList.get("user-agent") || "";
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "";
 
-  // await saveUserStats(userAgent);
+  await saveUserStats(userAgent);
 
   return (
     <SidebarProvider>

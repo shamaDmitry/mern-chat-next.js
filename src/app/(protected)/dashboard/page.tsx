@@ -1,4 +1,3 @@
-import { DevicesChart } from "@/src/components/dashboard/charts/devices-chart";
 import { RevenueChart } from "@/src/components/dashboard/charts/revenue-chart";
 import { UserActivityChart } from "@/src/components/dashboard/charts/user-activity-chart";
 import { Headline } from "@/src/components/typo/Headline";
@@ -11,15 +10,9 @@ import {
 } from "@/src/components/ui/card";
 
 import { CreditCard, LineChart, Users } from "lucide-react";
-// import { UAParser } from "ua-parser-js";
-// import { headers } from "next/headers";
+import { DevicesChartWrapper } from "@/src/components/dashboard/charts/devices-chart-wrapper";
 
 export default async function DashboardPage() {
-  // const headersList = await headers();
-  // const userAgent = headersList.get("user-agent") || "";
-
-  // const { browser, cpu, device } = UAParser(userAgent);
-
   return (
     <div>
       <Headline className="mb-5">DashboardPage</Headline>
@@ -118,7 +111,7 @@ export default async function DashboardPage() {
             </CardHeader>
 
             <CardContent>
-              <DevicesChart />
+              <DevicesChartWrapper />
             </CardContent>
           </Card>
         </div>
